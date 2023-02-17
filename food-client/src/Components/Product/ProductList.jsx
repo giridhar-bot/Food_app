@@ -16,10 +16,13 @@ import {
 } from "@mui/material";
 import { Home, ShoppingCart } from "@mui/icons-material";
 import { css } from "@emotion/react";
+import CartDrawer from "./CartDrawer";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [cartItems, setCartItems] = useState([]);
+  const [isCartOpen, setCartOpen] = useState(false);
 
   useEffect(() => {
     axios
@@ -32,9 +35,21 @@ function ProductList() {
     setSearchTerm(event.target.value);
   };
 
-  const filteredProducts = products.filter((product) => {
-    return product.id.toString().includes(searchTerm);
-  });
+  const filteredProducts = products.filter((product) =>
+    product.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleAddToCart = (product) => {
+    setCartItems((prevItems) => [...prevItems, product]);
+  };
+
+  const handleRemoveCartItem = (product) => {
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.id !== product.id)
+    );
+  };
+
+  const cartTotal = cartItems.reduce((total, item) => total + item.price, 0);
 
   const styles = {
     appBar: css`
@@ -72,6 +87,9 @@ function ProductList() {
     productRating: css`
       color: #999;
     `,
+    productPrice: css`
+      font-weight: bold;
+    `,
   };
 
   return (
@@ -81,75 +99,86 @@ function ProductList() {
           <IconButton edge="start" color="inherit" css={styles.logo}>
             <Home />
           </IconButton>
-          <Typography variant="h6" noWrap css={styles.appBarTitle}>
-            Tweegi
-          </Typography>
-          <TextField
-            label="Search"
-            variant="outlined"
-            value={searchTerm}
-            onChange={handleSearch}
-            css={styles.search}
-            InputProps={{
-              style: {
-                color: "#fff",
-                borderColor: "#fff",
-              },
-            }}
-          />
-          <IconButton color="inherit">
-            <Badge badgeContent={0} color="error" css={styles.cartBadge}>
+          <IconButton
+            color="inherit"
+            css={styles.cartBadge}
+            onClick={() => setCartOpen(true)}
+          >
+            <Badge badgeContent={cartItems.length} color="secondary">
               <ShoppingCart />
             </Badge>
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="md" css={styles.productListContainer}>
-        <Grid container spacing={2}>
+      <Container sx={{ py: 4 }}>
+        <TextField
+          label="Search products"
+          variant="outlined"
+          size="small"
+          fullWidth
+          value={searchTerm}
+          onChange={handleSearch}
+          css={styles.search}
+        />
+
+        <Grid container spacing={4} sx={{ mt: 4 }}>
           {filteredProducts.map((product) => (
-            <Grid item xs={12} sm={6} md={4} key={product.id}>
+            <Grid key={product.id} item xs={12} sm={6} md={4}>
               <Card css={styles.card}>
                 <CardActionArea>
                   <CardMedia
-                    component="img"
-                    css={styles.cardMedia}
                     image={product.image}
-                    alt={product.description}
+                    title={product.title}
+                    css={styles.cardMedia}
                   />
                   <CardContent css={styles.cardContent}>
                     <div>
                       <Typography
                         gutterBottom
-                        variant="h6"
+                        variant="h5"
                         component="h2"
                         css={styles.productTitle}
                       >
+                        {product.title}
+                      </Typography>
+                      <div css={styles.productRating}>
+                        {Array.from(
+                          Array(Math.round(product.rating)).keys()
+                        ).map((n) => (
+                          <span key={n}>&#11088;</span>
+                        ))}
+                      </div>
+                      <Typography variant="body2" color="textSecondary">
                         {product.description}
                       </Typography>
-                      <Typography variant="body2" css={styles.productRating}>
-                        Rating: {product.rating}
-                      </Typography>
                     </div>
-                    <div>
-                      <Typography
-                        variant="h6"
-                        component="h2"
-                        css={styles.productPrice}
-                      >
-                        ${product.price.toFixed(2)}
-                      </Typography>
-                      <Typography variant="body2" css={styles.productQuantity}>
-                        Quantity: {product.quantity}
-                      </Typography>
-                    </div>
+                    <Typography
+                      variant="body1"
+                      color="textSecondary"
+                      css={styles.productPrice}
+                    >
+                      ${product.price.toFixed(2)}
+                    </Typography>
                   </CardContent>
                 </CardActionArea>
+                <button onClick={() => handleAddToCart(product)}>
+                  Add to cart
+                </button>
               </Card>
             </Grid>
           ))}
         </Grid>
+
+        <CartDrawer
+          cartItems={cartItems}
+          cartTotal={cartTotal}
+          isOpen={isCartOpen}
+          handleClose={() => setCartOpen(false)}
+          handleRemoveItem={handleRemoveCartItem}
+        />
       </Container>
     </div>
   );
 }
+
 export default ProductList;

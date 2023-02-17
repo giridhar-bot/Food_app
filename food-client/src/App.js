@@ -1,44 +1,37 @@
-import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import LoginPage from "./Components/Login/LoginForm";
+// import React from "react";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import Header from "./Home/Header";
+// import Sidebar from "./Home/Sidebar";
+// import Footer from "./Home/Footer";
+// import Home from "./Home/Home";
 
-const AuthContext = React.createContext();
+// function App() {
+//   return (
+//     <Router>
+//       <div className="app">
+//         <Header />
+//         <Sidebar />
+//         <main>
+//           <Routes>
+//             <Route exact path="/" component={Home} />
+//           </Routes>
+//         </main>
+//         <Footer />
+//       </div>
+//     </Router>
+//   );
+// }
+
+// export default App;
+import React from "react";
+import ProductList from "./Components/Product/ProductList";
 
 const App = () => {
-  const [authenticated, setAuthenticated] = useState(
-    localStorage.getItem("authenticated") || false
-  );
-
-  useEffect(() => {
-    const token = localStorage.getItem("authenticated");
-    if (token) {
-      setAuthenticated(true);
-    } else {
-      setAuthenticated(false);
-    }
-  }, []);
-
   return (
-    <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
-      <Router>
-        <Routes>
-          <Route exact path="/login">
-            {authenticated ? <Navigate to="/" /> : <LoginPage />}
-          </Route>
-          <Route path="/">
-            {authenticated ? <h1>Welcome!</h1> : <Navigate to="/login" />}
-          </Route>
-        </Routes>
-      </Router>
-    </AuthContext.Provider>
+    <div>
+      <ProductList />
+    </div>
   );
 };
 
 export default App;
-
-
