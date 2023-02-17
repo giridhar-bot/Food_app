@@ -15,9 +15,8 @@ import {
   Badge,
 } from "@mui/material";
 import { Home, ShoppingCart } from "@mui/icons-material";
-import { css } from "@emotion/react";
 import CartDrawer from "./CartDrawer";
-
+import "./ProductList.css";
 function ProductList() {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,7 +25,7 @@ function ProductList() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/products")
+      .get("http://localhost:3100/products")
       .then((response) => setProducts(response.data))
       .catch((error) => console.log(error));
   }, []);
@@ -52,54 +51,20 @@ function ProductList() {
   const cartTotal = cartItems.reduce((total, item) => total + item.price, 0);
 
   const styles = {
-    appBar: css`
-      background-color: #333;
-      color: #fff;
-    `,
-    logo: css`
-      margin-right: 16px;
-    `,
-    search: css`
-      margin-left: auto;
-    `,
-    cartBadge: css`
-      background-color: #f44336;
-    `,
-    card: css`
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease-in-out;
-
-      &:hover {
-        transform: scale(1.03);
-      }
-    `,
-    cardMedia: css`
-      height: 450px;
-    `,
-    cardContent: css`
-      display: flex;
-      justify-content: space-between;
-    `,
-    productTitle: css`
-      font-weight: bold;
-    `,
-    productRating: css`
-      color: #999;
-    `,
-    productPrice: css`
-      font-weight: bold;
-    `,
+    appBar: {
+      backgroundColor: "#2196f3",
+      marginBottom: "30px",
+    },
   };
 
   return (
-    <div>
+    <div className="ProductListContainer">
       <AppBar position="static" css={styles.appBar}>
         <Toolbar>
           <IconButton edge="start" color="inherit" css={styles.logo}>
             <Home />
           </IconButton>
-          <IconButton
+          <IconButton 
             color="inherit"
             css={styles.cartBadge}
             onClick={() => setCartOpen(true)}
@@ -121,14 +86,14 @@ function ProductList() {
           css={styles.search}
         />
 
-        <Grid container spacing={4} sx={{ mt: 4 }}>
+        <Grid container spacing={7} sx={{ mt: 1 }}>
           {filteredProducts.map((product) => (
             <Grid key={product.id} item xs={12} sm={6} md={4}>
               <Card css={styles.card}>
                 <CardActionArea>
                   <CardMedia
                     image={product.image}
-                    title={product.title}
+                    title={product.id}
                     css={styles.cardMedia}
                   />
                   <CardContent css={styles.cardContent}>
@@ -139,7 +104,7 @@ function ProductList() {
                         component="h2"
                         css={styles.productTitle}
                       >
-                        {product.title}
+                        {product.id}
                       </Typography>
                       <div css={styles.productRating}>
                         {Array.from(
@@ -161,7 +126,10 @@ function ProductList() {
                     </Typography>
                   </CardContent>
                 </CardActionArea>
-                <button onClick={() => handleAddToCart(product)}>
+                <button
+                  className="CartButton"
+                  onClick={() => handleAddToCart(product)}
+                >
                   Add to cart
                 </button>
               </Card>

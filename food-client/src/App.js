@@ -25,10 +25,11 @@
 // export default App;
 import React from "react";
 import ProductList from "./Components/Product/ProductList";
+import "./App.css"
 
 const App = () => {
   return (
-    <div>
+    <div className="App">
       <ProductList />
     </div>
   );
