@@ -11,7 +11,7 @@ const products = [
     image: "https://example.com/image1.jpg",
     price: 10.99,
     rating: 4.5,
-    description: "This is the first product",
+    description: "Butter chicken",
     quantity: 20,
   },
   {
@@ -19,7 +19,7 @@ const products = [
     image: "https://example.com/image2.jpg",
     price: 19.99,
     rating: 3.2,
-    description: "This is the second product",
+    description: "Biryani",
     quantity: 10,
   },
   {
@@ -27,7 +27,7 @@ const products = [
     image: "https://example.com/image3.jpg",
     price: 5.99,
     rating: 4.0,
-    description: "This is the third product",
+    description: "Palak paneer",
     quantity: 15,
   },
   {
@@ -35,7 +35,7 @@ const products = [
     image: "https://example.com/image4.jpg",
     price: 12.49,
     rating: 4.8,
-    description: "This is the fourth product",
+    description: "Tandoori chicken",
     quantity: 5,
   },
   {
@@ -43,7 +43,7 @@ const products = [
     image: "https://example.com/image5.jpg",
     price: 9.99,
     rating: 3.5,
-    description: "This is the fifth product",
+    description: "Samosas",
     quantity: 30,
   },
   {
@@ -51,7 +51,7 @@ const products = [
     image: "https://example.com/image6.jpg",
     price: 29.99,
     rating: 4.2,
-    description: "This is the sixth product",
+    description: "Dosa",
     quantity: 8,
   },
   {
@@ -59,7 +59,7 @@ const products = [
     image: "https://example.com/image7.jpg",
     price: 7.99,
     rating: 3.0,
-    description: "This is the seventh product",
+    description: "Gulab jamun",
     quantity: 25,
   },
   {
@@ -67,7 +67,7 @@ const products = [
     image: "https://example.com/image8.jpg",
     price: 15.99,
     rating: 4.5,
-    description: "This is the eighth product",
+    description: "Lassi",
     quantity: 12,
   },
   {
@@ -75,7 +75,7 @@ const products = [
     image: "https://example.com/image9.jpg",
     price: 24.99,
     rating: 4.7,
-    description: "This is the ninth product",
+    description: "Chole bhature",
     quantity: 3,
   },
   {
@@ -83,8 +83,89 @@ const products = [
     image: "https://example.com/image10.jpg",
     price: 8.99,
     rating: 3.9,
-    description: "This is the tenth product",
+    description: "Vada pav",
     quantity: 18,
+  },
+
+  {
+    id: 11,
+    image: "https://example.com/image11.jpg",
+    price: 11.99,
+    rating: 4.1,
+    description: "Mutton biryani",
+    quantity: 7,
+  },
+  {
+    id: 12,
+    image: "https://example.com/image12.jpg",
+    price: 6.99,
+    rating: 3.8,
+    description: "Aloo gobi",
+    quantity: 22,
+  },
+  {
+    id: 13,
+    image: "https://example.com/image13.jpg",
+    price: 16.99,
+    rating: 4.4,
+    description: "Chicken tikka masala",
+    quantity: 14,
+  },
+  {
+    id: 14,
+    image: "https://example.com/image14.jpg",
+    price: 8.49,
+    rating: 3.6,
+    description: "Paneer makhani",
+    quantity: 17,
+  },
+  {
+    id: 15,
+    image: "https://example.com/image15.jpg",
+    price: 13.99,
+    rating: 4.3,
+    description: "Fish curry",
+    quantity: 9,
+  },
+  {
+    id: 16,
+    image: "https://example.com/image16.jpg",
+    price: 4.99,
+    rating: 2.9,
+    description: "Papdi chaat",
+    quantity: 28,
+  },
+  {
+    id: 17,
+    image: "https://example.com/image17.jpg",
+    price: 20.99,
+    rating: 4.6,
+    description: "Lamb rogan josh",
+    quantity: 6,
+  },
+  {
+    id: 18,
+    image: "https://example.com/image18.jpg",
+    price: 9.99,
+    rating: 3.7,
+    description: "Vegetable samosas",
+    quantity: 21,
+  },
+  {
+    id: 19,
+    image: "https://example.com/image19.jpg",
+    price: 26.99,
+    rating: 4.8,
+    description: "Prawn masala",
+    quantity: 4,
+  },
+  {
+    id: 20,
+    image: "https://example.com/image20.jpg",
+    price: 7.99,
+    rating: 3.4,
+    description: "Raita",
+    quantity: 26,
   },
 ];
 
@@ -130,6 +211,6 @@ app.delete("/products/:id", (req, res) => {
   res.send("Product deleted successfully");
 });
 
-app.listen(3000, () => {
-  console.log("Server listening on port 3000");
+app.listen(3100, () => {
+  console.log("Server listening on port 3100");
 });
